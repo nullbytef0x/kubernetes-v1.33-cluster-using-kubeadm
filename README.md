@@ -2,9 +2,9 @@
 
 ### Prerequisites
 
-Ubuntu 22.04 LTS installed on all nodes.
-Access to the internet.
-User with sudo privileges.
+- Ubuntu 22.04 LTS installed on all nodes.
+- Access to the internet.
+- User with sudo privileges.
 
 ### Step-by-Step Installation
 
