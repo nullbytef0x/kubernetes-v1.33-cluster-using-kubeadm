@@ -22,14 +22,14 @@ sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
 sysctl params required by setup, params persist across reboots
 
 ```jsx
- 	cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
- 	net.ipv4.ip_forward = 1
- 	EOF
+cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
+net.ipv4.ip_forward = 1
+EOF
 ```
 
 Apply sysctl params without reboot
 ```jsx
- 	sudo sysctl --system
+sudo sysctl --system
 ```
 
 ### Step 3: Verify IPv4 Packet Forwarding
