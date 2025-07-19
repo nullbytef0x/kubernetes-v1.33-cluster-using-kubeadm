@@ -94,9 +94,8 @@ sudo systemctl enable --now kubelet
 ```jsx
 sudo kubeadm config images pull
 sudo kubeadm init --control-plane-endpoint=<master_node_IP> --pod-network-cidr=<pod_network>
-
-Example: sudo kubeadm init --control-plane-endpoint=192.168.8.106 --pod-network-cidr=10.244.0.0/16
 ```
+Example: sudo kubeadm init --control-plane-endpoint=192.168.8.106 --pod-network-cidr=10.244.0.0/16
 
 ```yaml
 After Initialzing the Cluster Connect to it and apply the CNI yaml (We're using Calico CNI in this guide):
