@@ -19,13 +19,16 @@ sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
 
 ### Step 2: Enable IPv4 Packet Forwarding
 
-```jsx
 sysctl params required by setup, params persist across reboots
+
+```jsx
  	cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
  	net.ipv4.ip_forward = 1
  	EOF
+```
 
 Apply sysctl params without reboot
+```jsx
  	sudo sysctl --system
 ```
 
@@ -38,14 +41,14 @@ sysctl net.ipv4.ip_forward
 ### Step 4: Install containerd
 
 ```jsx
-wget [https://github.com/containerd/containerd/releases/download/v2.1.3/containerd-2.1.3-linux-amd64.tar.gz](https://github.com/containerd/containerd/releases/download/v2.1.3/containerd-2.1.3-linux-amd64.tar.gz)
+wget https://github.com/containerd/containerd/releases/download/v2.1.3/containerd-2.1.3-linux-amd64.tar.gz
 tar Cxzvf /usr/local containerd-2.1.3-linux-amd64.tar.gz
 ```
 
 ### Step 5:  Modify containerd Configuration for systemd Support
 
 ```jsx
-wget [https://raw.githubusercontent.com/containerd/containerd/main/containerd.service](https://raw.githubusercontent.com/containerd/containerd/main/containerd.service)
+wget https://raw.githubusercontent.com/containerd/containerd/main/containerd.service
 sudo mkdir -p /usr/local/lib/systemd/system/
 sudo mv containerd.service /usr/local/lib/systemd/system/
 ```
@@ -60,14 +63,14 @@ systemctl enable --now containerd
 ### Step 7:  	Installing runc
 
 ```jsx
-wget [https://github.com/opencontainers/runc/releases/download/v1.3.0/runc.amd64](https://github.com/opencontainers/runc/releases/download/v1.3.0/runc.amd64)
+wget https://github.com/opencontainers/runc/releases/download/v1.3.0/runc.amd64
 install -m 755 runc.amd64 /usr/local/sbin/runc
 ```
 
 ### Step 8:  Installing CNI plugins
 
 ```jsx
-wget [https://github.com/containernetworking/plugins/releases/download/v1.7.1/cni-plugins-linux-amd64-v1.7.1.tgz](https://github.com/containernetworking/plugins/releases/download/v1.7.1/cni-plugins-linux-amd64-v1.7.1.tgz)
+wget https://github.com/containernetworking/plugins/releases/download/v1.7.1/cni-plugins-linux-amd64-v1.7.1.tgz
 mkdir -p /opt/cni/bin
 tar Cxzvf /opt/cni/bin cni-plugins-linux-amd64-v1.7.1.tgz
 ```
@@ -78,8 +81,8 @@ tar Cxzvf /opt/cni/bin cni-plugins-linux-amd64-v1.7.1.tgz
 sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates curl gpg
 sudo mkdir -p -m 755 /etc/apt/keyrings
-curl -fsSL [https://pkgs.k8s.io/core:/stable:/v1.33/deb/Release.key](https://pkgs.k8s.io/core:/stable:/v1.33/deb/Release.key) | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] [https://pkgs.k8s.io/core:/stable:/v1.33/deb/](https://pkgs.k8s.io/core:/stable:/v1.33/deb/) /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.33/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.33/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
 sudo apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
