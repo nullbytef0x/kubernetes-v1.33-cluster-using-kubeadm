@@ -111,19 +111,22 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 export KUBECONFIG=/etc/kubernetes/admin.conf
 ```
+### Apply the CNI YAML
 
-```yaml
-#Apply the CNI YAML
-
+```jsx
 curl https://raw.githubusercontent.com/projectcalico/calico/v3.28.0/manifests/calico.yaml -O
+```
 
-# Fix the pod CIDR to match your setup
+#### Fix the pod CIDR to match your setup
+```jsx
 sed -i 's|192.168.0.0/16|<your_CIDR> |g' calico.yaml
+```
 
 Example:
 	sed -i 's|192.168.0.0/16|10.244.0.0/16|g' calico.yaml
 
-# Apply the manifest
+#### Apply the manifest
+```jsx
 kubectl apply -f calico.yaml
 ```
 
@@ -133,6 +136,10 @@ kubectl apply -f calico.yaml
 Run the command generated after initializing the master node on each worker node. For example:
 
 kubeadm join 192.168.8.106:6443 --token kv1x5t.k3oskrdeiya2cwv2 --discovery-token-ca-cert-hash sha256:688cc5fb0b54c1b6047d499eed6ac0081d4805e69d75745929ca23389269015c
+```
+
+```jsx
+kubectl get pods -n kube-system
 ```
 
 ### Deploy a Sample Three-Tier Web Application
